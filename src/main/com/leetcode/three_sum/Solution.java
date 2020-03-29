@@ -10,12 +10,13 @@ import java.util.List;
 
 public class Solution {
     public List<List<Integer>> threeSum(int[] nums) {
-        Arrays.sort(nums);
+        Arrays.sort(nums); // insertion sort: n^2 // hypothesis
         List<List<Integer>> res = new ArrayList<>();
 
         /**
          *
          * o(n^2)
+         * o(n^2 * log n)
          *
          * a, b, c, d, e, f, g..., z
          * ^  ^                    ^
