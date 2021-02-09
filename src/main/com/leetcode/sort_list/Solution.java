@@ -1,5 +1,8 @@
 package com.leetcode.sort_list;
 
+import java.util.Comparator;
+import java.util.PriorityQueue;
+
 public class Solution {
     public static class ListNode {
         int val;
@@ -11,54 +14,93 @@ public class Solution {
         }
     }
 
+
+    // TODO use merge sort (divide and conquer), top-down and then follow-up bottom-up
+    // round 2 (25ms)
     public ListNode sortList(ListNode head) {
-        if (head == null || head.next == null) {
+        if (head == null) {
             return head;
         }
 
-        // explicitly split dll into two dlls of half size
-        ListNode second = split(head);
-        head = sortList(head);
-        second = sortList(second);
+        PriorityQueue<ListNode> queue = new PriorityQueue<>(new Comparator<ListNode>() {
+            @Override
+            public int compare(ListNode l1, ListNode l2) {
+                return l1.val - l2.val;
+            }
+        });
 
-        // merge again (includes sorting)
-        return merge(head, second);
+        ListNode curr = head;
+        while (curr != null) {
+            queue.offer(curr);
+            curr = curr.next;
+        }
+
+        ListNode n = null;
+        while (!queue.isEmpty()) {
+            ListNode tmp = queue.poll();
+            if (n != null) {
+                n.next = tmp;
+                n = n.next;
+            } else {
+                n = tmp;
+                head = n;
+            }
+        }
+        n.next = null;
+
+        return head;
     }
 
-    private ListNode merge(ListNode first, ListNode second) {
-        if (first == null) {
-            return second;
-        }
 
-        if (second == null) {
-            return first;
-        }
-
-        // pick smaller element to be the first element and concentrate with others (after merged)
-        if (first.val < second.val) {
-            first.next = merge(first.next, second); // **
-//            first.next.prev = first;
-//            first.prev = null;
-            return first;
-        } else {
-            second.next = merge(first, second.next); // **
-//            second.next.prev = second;
-//            second.prev = null;
-            return second;
-        }
-    }
-
-    private ListNode split(ListNode head) {
-        ListNode fast = head, slow = head;
-        while (fast.next != null && fast.next.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
-        }
-
-        ListNode ret = slow.next;
-        slow.next = null;
-        return ret;
-    }
+    // round 1 (5ms)
+//    public ListNode sortList(ListNode head) {
+//        if (head == null || head.next == null) {
+//            return head;
+//        }
+//
+//        // explicitly split dll into two dlls of half size
+//        ListNode second = split(head);
+//        head = sortList(head);
+//        second = sortList(second);
+//
+//        // merge again (includes sorting)
+//        return merge(head, second);
+//    }
+//
+//    private ListNode merge(ListNode first, ListNode second) {
+//        if (first == null) {
+//            return second;
+//        }
+//
+//        if (second == null) {
+//            return first;
+//        }
+//
+//        // pick smaller element to be the first element and concentrate with others (after merged)
+//        if (first.val < second.val) {
+//            first.next = merge(first.next, second); // **
+////            first.next.prev = first;
+////            first.prev = null;
+//            return first;
+//        } else {
+//            second.next = merge(first, second.next); // **
+////            second.next.prev = second;
+////            second.prev = null;
+//            return second;
+//        }
+//    }
+//
+//    private ListNode split(ListNode head) {
+//        ListNode fast = head, slow = head;
+//        while (fast.next != null && fast.next.next != null) { // !! no slow.next
+//            slow = slow.next;
+//            fast = fast.next.next;
+//        }
+//
+//        ListNode ret = slow.next;
+//        slow.next = null;
+//        return ret;
+//    }
 
 
 }

@@ -28,10 +28,10 @@ public class Solution {
         int i = 0;
         int j = length - 1;
 
-        while (j - i > 0) {
+        while (i < j) {
             int left = height[i];
             int right = height[j];
-            int h = (left > right) ? right : left;
+            int h = Math.min(left, right);
             int v = j - i;
             int area = h * v;
             if (area > max) {

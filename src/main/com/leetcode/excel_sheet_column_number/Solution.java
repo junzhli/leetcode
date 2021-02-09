@@ -9,7 +9,7 @@ public class Solution {
         int res = 0;
         int multiplier = s.length() - 1;
         for (int i = 0; i < s.length(); i++) {
-            res += (s.charAt(i) - 64) * Math.pow(26, multiplier);
+            res += (s.charAt(i) - 64) * Math.pow(26, multiplier); // 64 = 'A'
             multiplier--;
         }
 

@@ -29,7 +29,7 @@ class Solution {
 
 //        int depth = getDepth(root);
         Node curr = root;
-        for (int i = 0; curr != null; i++, curr = curr.left) {
+        for (int i = 0; curr != null; i++, curr = curr.left) { // by traversing its left child node to know the height of binary tree (perfect)
             LinkedList<Node> nodesSeq = new LinkedList<>();
             getLevelNodesInRevOrder(root, i, nodesSeq);
             Node prev = null;

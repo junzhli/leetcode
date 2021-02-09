@@ -1,5 +1,8 @@
 package com.leetcode.integer_to_roman;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class Solution {
     /**
      * I             1
@@ -25,7 +28,7 @@ public class Solution {
         int index = 0;
 
         while (num > 0) {
-            while (num >= values[index]) {
+            while (num >= values[index]) { // ** >=!!!! not >
                 res += symbols[index];
                 num -= values[index];
             }

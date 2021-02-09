@@ -4,57 +4,84 @@ package com.leetcode.rotate_image;
  * https://leetcode.com/problems/rotate-image/
  */
 public class Solution {
-    /*
-     * clockwise rotate
-     * first reverse up to down, then swap the symmetry
-     * 1 2 3     7 8 9     7 4 1
-     * 4 5 6  => 4 5 6  => 8 5 2
-     * 7 8 9     1 2 3     9 6 3
-     */
+
+    // round 2
+    // time complexity: o(n)
+    // space complexity: o(1) -- in-place
     public void rotate(int[][] matrix) {
-        int half = (int) Math.floor((double) matrix.length / 2);
-        reverse(matrix, half);
-        for (int j = 0; j < matrix.length; j++) {
-            for (int i = 0; i < j; i++) {
-                matrix[j][i] ^= matrix[i][j];
-                matrix[i][j] ^= matrix[j][i];
-                matrix[j][i] ^= matrix[i][j];
+        int n = matrix.length;
+
+        // 1. flip the matrix vertically
+        for (int i = 0; i < n/2; i++) {
+            for (int j = 0; j < n; j++) {
+                int tmp = matrix[i][j];
+                matrix[i][j] = matrix[n - i - 1][j];
+                matrix[n - i - 1][j] = tmp;
+            }
+        }
+
+        // 2. swap the symmetric
+        for (int i = 0; i < n; i++) {
+            for(int j = i + 1; j < n; j++) {
+                int tmp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = tmp;
             }
         }
     }
 
-    public void reverse(int[][] matrix, int half) {
-        int max = matrix.length - 1;
-//        if (vertical) {
-        for (int i = 0; i < half; i++) {
-            for (int j = 0; j < matrix.length; j++) {
-                matrix[max - i][j] ^= matrix[i][j];
-                matrix[i][j] ^= matrix[max - i][j];
-                matrix[max - i][j] ^= matrix[i][j];
-            }
-        }
-//        } else {
-//            for (int j = 0; j < half; j++) {
-//                for (int i = 0; i < matrix.length; i++) {
-//                    matrix[i][max - j] = matrix[i][j];
-//                }
+    // round 1
+//    /*
+//     * clockwise rotate
+//     * first reverse up to down, then swap the symmetry
+//     * 1 2 3     7 8 9     7 4 1
+//     * 4 5 6  => 4 5 6  => 8 5 2
+//     * 7 8 9     1 2 3     9 6 3
+//     */
+//    public void rotate(int[][] matrix) {
+//        int half = (int) Math.floor((double) matrix.length / 2);
+//        reverse(matrix, half);
+//        for (int j = 0; j < matrix.length; j++) {
+//            for (int i = 0; i < j; i++) {
+//                matrix[j][i] ^= matrix[i][j];
+//                matrix[i][j] ^= matrix[j][i];
+//                matrix[j][i] ^= matrix[i][j];
 //            }
 //        }
-    }
-
-//    private void swap(int a, int b) {
-//        a ^= b;
-//        b ^= a;
-//        a ^= b;
 //    }
-
-//    void rotate(vector<vector<int> > &matrix) {
-//        reverse(matrix.begin(), matrix.end());
-//        for (int i = 0; i < matrix.size(); ++i) {
-//            for (int j = i + 1; j < matrix[i].size(); ++j)
-//                swap(matrix[i][j], matrix[j][i]);
+//
+//    public void reverse(int[][] matrix, int half) {
+//        int max = matrix.length - 1;
+////        if (vertical) {
+//        for (int i = 0; i < half; i++) {
+//            for (int j = 0; j < matrix.length; j++) {
+//                matrix[max - i][j] ^= matrix[i][j];
+//                matrix[i][j] ^= matrix[max - i][j];
+//                matrix[max - i][j] ^= matrix[i][j];
+//            }
 //        }
+////        } else {
+////            for (int j = 0; j < half; j++) {
+////                for (int i = 0; i < matrix.length; i++) {
+////                    matrix[i][max - j] = matrix[i][j];
+////                }
+////            }
+////        }
 //    }
+//
+////    private void swap(int a, int b) {
+////        a ^= b;
+////        b ^= a;
+////        a ^= b;
+////    }
+//
+////    void rotate(vector<vector<int> > &matrix) {
+////        reverse(matrix.begin(), matrix.end());
+////        for (int i = 0; i < matrix.size(); ++i) {
+////            for (int j = i + 1; j < matrix[i].size(); ++j)
+////                swap(matrix[i][j], matrix[j][i]);
+////        }
+////    }
 
     /*
      * anticlockwise rotate

@@ -22,7 +22,7 @@ public class Solution {
 //        }
 //        return n < 0 ?  1/ans : ans;
 //    }
-
+    //TODO need further study
     public double myPow(double x, int n) {
 
         if (x == 0) {

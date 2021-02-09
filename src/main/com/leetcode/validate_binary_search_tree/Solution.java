@@ -15,12 +15,12 @@ public class Solution {
     }
 
     public boolean isValidBST(TreeNode root) {
-        return isValidBST(root, (double) Integer.MIN_VALUE - 1, (double) Integer.MAX_VALUE + 1);// note that using double as min/max is to handle edge case such as 'integer.min' as value
+        return isValidBST(root, (long) Integer.MIN_VALUE - 1, (long) Integer.MAX_VALUE + 1);// note that using double as min/max is to handle edge case such as 'integer.min' as value
     }
 
     private boolean isValidBST(TreeNode node, double min, double max) {
         if (node == null) {
-            return false;
+            return true; // should be true
         }
 
         if (node.val <= min || node.val >= max) {

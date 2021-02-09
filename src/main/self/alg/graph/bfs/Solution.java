@@ -3,6 +3,7 @@ package self.alg.graph.bfs;
 import java.util.LinkedList;
 import java.util.Queue;
 
+// bfs --> shortest path
 public class Solution {
 
     static class Graph {

@@ -92,5 +92,11 @@ class SolutionTest {
         int result14 = sol.myAtoi(test14);
         // output: 123
         assertEquals(123, result14);
+
+        // input:  2147483648
+        String test15 = "2147483648";
+        int result15 = sol.myAtoi(test15);
+        // output: 2147483647
+        assertEquals(2147483647, result15);
     }
 }

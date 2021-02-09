@@ -3,22 +3,61 @@ package com.leetcode.jump_game;
 import java.awt.image.ImageProducer;
 
 // https://leetcode.com/problems/jump-game/solution/
-
-
-// !!!! Greedy solution
 public class Solution {
 
+    // round 3 top-down with memorization 1000ms, 43.7mb
     public boolean canJump(int[] nums) {
-        int lastPos = nums.length - 1;
+        Boolean[] cache = new Boolean[nums.length];
+        cache[nums.length - 1] = true;
+        return reachable(nums, cache, 0);
+    }
 
-        for (int i = nums.length - 1; i >= 0; i--) {
-            if (i + nums[i] > lastPos) {
-                lastPos = i;
+    private boolean reachable(int[] nums, Boolean[] cache, int index) {
+        if (cache[index] != null) {
+            return cache[index];
+        }
+
+        for (int i = 1; i <= nums[index] && index + i < nums.length; i++) {
+            if (reachable(nums, cache, nums[index + i])) {
+                cache[index + i] = true;
+                return true;
             }
         }
 
-        return lastPos == 0;
+        cache[index] = false;
+        return false;
     }
+
+// !!!! Greedy solution
+// round 2
+    // from the last index, keep track of the last position of index that can read to the last index
+    // return true if equals to 0
+//    public boolean canJump(int[] nums) {
+//        int lastGood = Integer.MIN_VALUE;
+//        for (int i = nums.length - 1; i >= 0; i--) {
+//            if (i + nums[i] >= lastGood) {
+//                lastGood = i;
+//            }
+//        }
+//
+//        return lastGood == 0;
+//    }
+
+
+
+
+// round 1
+//    public boolean canJump(int[] nums) {
+//        int lastPos = nums.length - 1;
+//
+//        for (int i = nums.length - 1; i >= 0; i--) {
+//            if (i + nums[i] > lastPos) {
+//                lastPos = i;
+//            }
+//        }
+//
+//        return lastPos == 0;
+//    }
 }
 
 

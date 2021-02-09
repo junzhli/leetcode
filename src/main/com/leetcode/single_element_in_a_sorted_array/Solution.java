@@ -40,23 +40,50 @@ public class Solution {
          * util lo >= hi
          */
 
+        /**
+         * (revised)
+         * 0 1 2 3 4 5 6 7 8 9 0 1 2 (index)
+         *
+         * odd index, right side (lo = mid + 1)
+         * 1 1 2 2 3 3 4 5 5 6 6 7 7
+         *       |
+         *
+         * odd index, left side (hi = mid - 1)
+         * 1 1 2 2 3 3 4 5 5 6 6 7 7
+         *                   |
+         *
+         * even index, left side (lo = mid + 2)
+         * 1 1 2 2 3 3 4 5 5 6 6 7 7
+         *         |
+         *
+         * even index, right side (hi = mid)
+         * 1 1 2 2 3 3 4 5 5 6 6 7 7
+         *                     |
+         *
+         *
+         * we notice that the single element "is always positioned at even index"!!!!!! (so in the even case, we need to care it's
+         * possible that middle is answer, as opposed to mid at odd index)
+         * so that's the reason we set hi as mid rather than mid - 1 when it comes to even index, right side
+         *
+         */
+
         if(nums.length == 1) return nums[0];
 
         int lo = 0, hi = nums.length - 1;
         while(lo < hi) {
-            int mid = lo + (hi - lo) / 2;
+            int mid = (lo + hi) / 2;
 
-            if(mid % 2 == 1) {
-                if(nums[mid] == nums[mid+1]) {
-                    hi = mid - 1;
-                } else {
-                    lo = mid + 1;
-                }
-            } else {
+            if(mid % 2 == 1) { // position is odd, answer is not possible: mid + 1, mid - 1 can be possible
                 if(nums[mid] == nums[mid-1]) {
-                    hi = mid;
+                    lo = mid + 1;
                 } else {
-                    lo = mid;
+                    hi = mid - 1;
+                }
+            } else { // position is even
+                if(nums[mid] == nums[mid+1]) {
+                    lo = mid + 2;
+                } else {
+                    hi = mid; // we stay at mid as mid is possible to be answer
                 }
             }
         }

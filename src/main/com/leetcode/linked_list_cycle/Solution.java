@@ -20,7 +20,7 @@ public class Solution {
         }
         ListNode walker = head;
         ListNode runner = head;
-        while (walker.next != null && runner.next != null && runner.next.next != null) {
+        while (walker.next != null && runner.next != null && runner.next.next != null) { // !!!!!!
             walker = walker.next;
             runner = runner.next.next;
             if (walker == runner) {

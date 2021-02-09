@@ -11,31 +11,27 @@ public class Solution {
             return 0;
         }
 
-        if (grid[0].length == 0) {
-            return 0;
+        int[][] cache = new int[grid.length][grid[0].length];
+        return helper(grid, cache, grid.length - 1, grid[0].length - 1);
+    }
+
+    private int helper(int[][] grid, int[][] cache, int x, int y) {
+        if (x == 0 && y == 0) {
+            return grid[0][0];
         }
 
-        int m = grid.length;
-        int n = grid[0].length;
-        int[][] res = new int[m][n];
-        res[0][0] = grid[0][0];
-
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (i == 0 && j == 0) {
-                    continue;
-                }
-
-                if (i - 1 >= 0 && j - 1 >= 0) {
-                    res[i][j] = Integer.min(res[i - 1][j], res[i][j - 1]) + grid[i][j];
-                } else if (i - 1 < 0) {
-                    res[i][j] = res[i][j - 1] + grid[i][j];
-                } else { // j - 1 < 0
-                    res[i][j] = res[i - 1][j] + grid[i][j];
-                }
-            }
+        if (x < 0 || y < 0) {
+            return Integer.MAX_VALUE;
         }
 
-        return res[m - 1][n - 1];
+        if (cache[x][y] != 0) {
+            return cache[x][y];
+        }
+
+        cache[x][y] = Math.min(
+                helper(grid, cache, x - 1, y),
+                helper(grid, cache, x, y - 1)
+        ) + grid[x][y];
+        return cache[x][y];
     }
 }

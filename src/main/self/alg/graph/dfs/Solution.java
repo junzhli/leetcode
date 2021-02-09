@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+// dfs --> topological sorting
 public class Solution {
     public static class Node {
         public int val;

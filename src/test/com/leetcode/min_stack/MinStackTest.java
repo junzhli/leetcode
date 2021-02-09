@@ -12,6 +12,18 @@ class MinStackTest {
      */
     @Test
     void push() {
+        MinStack stack = new MinStack();
+        stack.push(512);
+        stack.push(-1024);
+        stack.push(-1024);
+        stack.push(512);
+        stack.pop();
+        stack.getMin();
+        stack.pop();
+        stack.getMin();
+        stack.pop();
+        assertEquals(512, stack.getMin());
+
     }
 
     @Test

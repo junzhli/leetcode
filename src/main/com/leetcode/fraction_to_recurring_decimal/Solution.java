@@ -20,7 +20,7 @@ public class Solution {
 
         StringBuilder ret = new StringBuilder();
 
-        if (numerator < 0 && denominator >= 0 || numerator >= 0 && denominator < 0) {
+        if (numerator < 0 && denominator >= 0 || numerator > 0 && denominator < 0) { // !!! numerator should be  > not >=, zero is not allowed, which equals "0"
             ret.append("-"); // alternative: (numerator < 0)^(denominator < 0);
         }
 

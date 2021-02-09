@@ -1,9 +1,6 @@
 package com.leetcode.evaluate_reverse_polish_notation;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Stack;
+import java.util.*;
 
 public class Solution {
     public int evalRPN(String[] tokens) {

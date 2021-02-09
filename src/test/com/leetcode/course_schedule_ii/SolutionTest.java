@@ -24,4 +24,16 @@ class SolutionTest {
             System.out.println(i);
         }
     }
+
+    @Test
+    void testFindOrder() {
+        Solution sol = new Solution();
+        int[] res = sol.findOrder(2, new int[][] {
+                new int[]{1,0}
+        });
+
+        for (int i: res) {
+            System.out.println(i);
+        }
+    }
 }
