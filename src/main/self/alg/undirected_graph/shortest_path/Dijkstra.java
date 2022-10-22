@@ -3,7 +3,8 @@ package self.alg.undirected_graph.shortest_path;
 import java.util.*;
 
 // undirected shortest path problem --> dijkstra
-public class Solution {
+// edit: ?? should move to directed
+public class Dijkstra {
     static class Node {
         char val;
         List<Edge> edges;

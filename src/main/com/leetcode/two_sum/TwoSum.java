@@ -1,6 +1,5 @@
 package com.leetcode.two_sum;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
 
 class Solution {
     /**

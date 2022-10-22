@@ -75,6 +75,7 @@ public class Solution {
         int res = 0;
         int products = productRatings.size();
         float percentages = 0;
+        // put those pairs into priorityQueue, and the percentage of the total
         for (List<Integer> pRating: productRatings) {
             percentages += ((float) pRating.get(0) / (float) pRating.get(1));
             pQueue.offer(new ProductRating(pRating.get(0), pRating.get(1)));

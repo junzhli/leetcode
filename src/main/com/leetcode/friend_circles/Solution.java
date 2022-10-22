@@ -42,14 +42,17 @@ public class Solution {
         if (parent[x] == x) {
             return parent[x];
         }
-
-        return find(parent, parent[x]);
+        // return find(parent, parent[x]);
+        // follow-up: use path compression to get tree height reduced to big o constant
+        parent[x] = find(parent, parent[x]);
+        return parent[x];
     }
 
     private void union(int[] parent, int x, int y) {
         int xRoot = find(parent, x);
         int yRoot = find(parent, y);
 
+        // follow-up: use union by size or by rank to improve t.c.
         parent[xRoot] = yRoot;
     }
 }

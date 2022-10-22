@@ -1,6 +1,10 @@
 package self.playground;
 
 import java.util.*;
+import java.util.concurrent.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Solution {
 
@@ -165,7 +169,25 @@ public class Solution {
         }
     }
 
-    public static void main(String[] args) {
+    private static class test {
+
+    }
+
+    public static interface lambdaInterface {
+        void good();
+
+        default void great() {
+            System.out.println("good");
+        }
+
+        static void haha() {
+            System.err.println("what the fuck");
+        }
+    }
+
+    ExecutorService executorService = Executors.newFixedThreadPool(1);
+
+    public static void main(String[] args) throws InterruptedException {
 //        int[] array = new int[] {2,1,5,70,0,6};
 //        Solution sol = new Solution();
 //        int[] sortedArr = sol.quickSort(array);
@@ -173,12 +195,90 @@ public class Solution {
 //        for (int element: sortedArr) {
 //            System.out.println(element);
 //        }
-        HashSet<List<Integer>> abc = new HashSet<>();
+
+        // Java concurrent thread pool executors
+        ThreadFactory threadFactory = Executors.defaultThreadFactory();
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
+                Runtime.getRuntime().availableProcessors(), 100,
+                300,
+                TimeUnit.SECONDS,
+                new ArrayBlockingQueue<>(10), threadFactory, (r, executor) -> {
+                    System.err.println(r.toString() + " is shut down");
+                });
+
+        Thread thd = new Thread(() -> {
+            Thread.currentThread().isInterrupted();
+        });
+
+        ThreadFactory threadFactory1 = Executors.defaultThreadFactory();
+
+        Stream<Integer> integerStream = Stream.of(1,2,3,4);
+        integerStream.max(Integer::compareTo).get();
+
+        Stream.Builder<String> stringStreamBuilder = Stream.builder();
+        stringStreamBuilder
+                .add("1")
+                .add("2")
+                .add("3")
+                .build();
+
+        Function<String, String> stringTransformationFunc = (s1) -> s1.toLowerCase();
+
+        List<Integer> stream1 = Arrays.asList(1,2);
+        List<Integer> stream2 = Arrays.asList(1,2);
+        List<Integer> stream3 = Arrays.asList(1,2);
+
+        Stream<List<Integer>> allStreams = Stream.of(stream1, stream2, stream3);
+        List<Integer> result = allStreams.flatMap(Collection::stream).collect(Collectors.toList());
+        result.forEach(System.out::println);
+        System.out.println("-------");
+        result.stream().forEach(System.out::println);
+        System.out.println("-------");
+        result.stream()
+                .map(x -> x + 1)
+                .forEach(System.out::println);
+
+
+        BlockingQueue<Integer> blockingQueue = new LinkedBlockingQueue<>();
+
+        boolean terminated = threadPoolExecutor.awaitTermination(100, TimeUnit.SECONDS);
+        if (terminated) {
+            System.out.println("Good");
+        }
+
+
+        // Create list from implemented apis Arrays.asList vs List.of
+        List<Integer> arr = Arrays.asList(1,2,3); // mutable
+        List<Integer> arr2 = List.of(1,2,3,4); // immutable (available on Java 9 onwards)
+
+        Thread th1 = new Thread(new Task());
+        th1.start();
+        th1.join();
+
+        //
+        String testStr = "testGoodJob";
+        testStr.substring(1, testStr.length());
+
+        // Java 8 stream apis
+        int[] abc = new int[] {1,2,3,4,5,6};
+        Stream<int[]> streamInt = Stream.of(abc);
+        streamInt.filter(value -> value.length == 3);
+
+//        Optional<String> optionalStr = Optional.of(null);
+//        optionalStr.orElseGet((a) -> a);
+
+        HashSet<List<Integer>> abc2 = new HashSet<>();
         List<Integer> a = Arrays.asList(1,2,3);
         List<Integer> b = Arrays.asList(1,3,2);
         Collections.sort(b);
-        abc.add(a);
-        System.out.println(abc.contains(b));
+        abc2.add(a);
+        System.out.println(abc2.contains(b));
+
+        Object obj = null;
+
+        new test();
+
+        lambdaInterface lbd = () -> System.out.println("good");
 
 
         // topological sort
