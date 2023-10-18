@@ -3,48 +3,97 @@ package com.leetcode.course_schedule;
 import java.util.*;
 
 public class Solution {
-    // round 3
-    // using dfs (hasCycle)
+    // round 4
+    // use array to depict the relations across vertices
     public boolean canFinish(int numCourses, int[][] prerequisites) {
+        boolean[][] arr = new boolean[numCourses][numCourses];
         boolean[] visited = new boolean[numCourses];
-        boolean[] beingVisited = new boolean[numCourses];
-        ArrayList<Integer>[] adj = new ArrayList[numCourses];
-        for (int i = 0; i < numCourses; i++) {
-            adj[i] = new ArrayList<Integer>();
+        for (int i = 0; i < prerequisites.length; i++) {
+            int from = prerequisites[i][1];
+            int to = prerequisites[i][0];
+            arr[from][to] = true;
         }
 
-        for (int[] p: prerequisites) {
-            int before = p[0];
-            int course = p[1];
-            adj[before].add(course);
-        }
+        for (int i = 0; i < numCourses; i ++) {
+            if (visited[i]) {
+                continue;
+            }
 
-        for (int i = 0; i < numCourses; i++) {
-            if (!visited[i] && hasCycle(i, visited, beingVisited, adj)) {
+            boolean result = dfs(new boolean[numCourses], visited, arr, i);
+            if (!result) {
                 return false;
             }
         }
+        return true;
+    }
+
+    private boolean dfs(boolean[] visiting, boolean[] visited, boolean[][] arr, int v) {
+        if (visited[v]) {
+            return true;
+        }
+
+        if (visiting[v]) {
+            return false;
+        }
+
+        visiting[v] = true;
+        for (int i = 0; i < visiting.length; i++) {
+            if (arr[v][i]) {
+                boolean result = dfs(visiting, visited, arr, i);
+                if (!result) {
+                    return false;
+                }
+            }
+        }
+
+        visiting[v] = false;
+        visited[v] = true;
 
         return true;
     }
 
-    private boolean hasCycle(int i, boolean[] visited, boolean[] beingVisited, ArrayList<Integer>[] adj) {
-        if (beingVisited[i]) {
-            return true;
-        }
-
-        beingVisited[i] = true;
-        for (int a: adj[i]) {
-            if (!visited[a] && hasCycle(a, visited, beingVisited, adj)) {
-                return true;
-            }
-        }
-
-        beingVisited[i] = false;
-        visited[i] = true;
-
-        return false;
-    }
+    // round 3
+    // using dfs (hasCycle)
+//    public boolean canFinish(int numCourses, int[][] prerequisites) {
+//        boolean[] visited = new boolean[numCourses];
+//        boolean[] beingVisited = new boolean[numCourses];
+//        ArrayList<Integer>[] adj = new ArrayList[numCourses];
+//        for (int i = 0; i < numCourses; i++) {
+//            adj[i] = new ArrayList<Integer>();
+//        }
+//
+//        for (int[] p: prerequisites) {
+//            int before = p[0];
+//            int course = p[1];
+//            adj[before].add(course);
+//        }
+//
+//        for (int i = 0; i < numCourses; i++) {
+//            if (!visited[i] && hasCycle(i, visited, beingVisited, adj)) {
+//                return false;
+//            }
+//        }
+//
+//        return true;
+//    }
+//
+//    private boolean hasCycle(int i, boolean[] visited, boolean[] beingVisited, ArrayList<Integer>[] adj) {
+//        if (beingVisited[i]) {
+//            return true;
+//        }
+//
+//        beingVisited[i] = true;
+//        for (int a: adj[i]) {
+//            if (!visited[a] && hasCycle(a, visited, beingVisited, adj)) {
+//                return true;
+//            }
+//        }
+//
+//        beingVisited[i] = false;
+//        visited[i] = true;
+//
+//        return false;
+//    }
 
     // round 2.1
     // using bfs with iteration

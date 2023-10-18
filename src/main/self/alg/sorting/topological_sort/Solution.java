@@ -3,7 +3,9 @@ package self.alg.sorting.topological_sort;
 import utils.Array;
 
 import java.util.*;
-
+//Used in DAG, cycle detection, dep resolution, deadlock detection...
+//Will terminate when cycle detected
+//===
 // directed graph!!! --> shortest path problem
 // https://www.geeksforgeeks.org/topological-sorting/
 // good article to metaphor: https://efficientcodeblog.wordpress.com/2017/11/28/topological-sort-dfs-bfs-and-dag/
@@ -11,6 +13,7 @@ import java.util.*;
 // bfs will traverse every node at fixed depth and enqueue them into queue before proceeding to next level
 // dfs will swallow its deep
 // tree is wide -> use dfs, tree is deep -> use bfs
+@Deprecated
 public class Solution {
     static class Graph {
         int vertices;

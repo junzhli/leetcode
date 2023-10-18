@@ -4,6 +4,27 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class Solution {
+    /**
+     * intuitive approach
+     * t.c. o(nlog(n))
+     */
+//    public void wiggleSort(int[] nums) {
+//        Arrays.sort(nums);
+//        int n = nums.length - 1;
+//        int[] res = new int[nums.length];
+//        for (int i = 1; i < nums.length; i += 2) {
+//            res[i] = nums[n--];
+//        }
+//        for (int i = 0; i < nums.length; i += 2) {
+//            res[i] = nums[n--];
+//        }
+//
+//
+//        for (int i = 0; i < nums.length; i++) {
+//            nums[i] = res[i];
+//        }
+//    }
+
     // airbnb
     // this arr contains duplicate elements, not distinct as compared to wiggle sort
     // big o N * logN

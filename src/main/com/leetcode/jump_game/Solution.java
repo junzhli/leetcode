@@ -1,32 +1,120 @@
 package com.leetcode.jump_game;
 
 import java.awt.image.ImageProducer;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.PriorityQueue;
 
 // https://leetcode.com/problems/jump-game/solution/
 public class Solution {
-
-    // round 3 top-down with memorization 1000ms, 43.7mb
+    // round 5
+    // greedy
+    // https://leetcode.com/problems/jump-game/solutions/3435741/simple-clean-java-solution/
     public boolean canJump(int[] nums) {
-        Boolean[] cache = new Boolean[nums.length];
-        cache[nums.length - 1] = true;
-        return reachable(nums, cache, 0);
-    }
 
-    private boolean reachable(int[] nums, Boolean[] cache, int index) {
-        if (cache[index] != null) {
-            return cache[index];
+        Comparator<Integer> comparator = new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return 0;
+            }
+        };
+
+//        PriorityQueue<Integer> queue = new PriorityQueue<>(new Comparator<Integer>() {
+//            @Override
+//            public int compare(Integer o1, Integer o2) {
+//                return 0;
+//            }
+//        });
+//        queue.poll();
+//        queue.isEmpty();
+//        queue.offer();
+//        queue.add();
+
+//        ArrayDeque<Integer> deque = new ArrayDeque<>();
+//        // when used like a queue
+//        deque.offer(); // won't
+//        deque.add(); // will throw error if type error occurred
+//        deque.poll();
+//        // when used like a stack
+//        deque.pop();
+//        deque.push();
+//        // shared
+//        deque.isEmpty();
+//        deque.size();
+
+
+//        ArrayList<Integer> aaa = new ArrayList<>();
+//        aaa.remove();
+        if (nums.length == 0) {
+            return false;
         }
 
-        for (int i = 1; i <= nums[index] && index + i < nums.length; i++) {
-            if (reachable(nums, cache, nums[index + i])) {
-                cache[index + i] = true;
+        if (nums.length == 1) {
+            return true;
+        }
+
+        int stepsLeft = nums[0];
+        int i = 1;
+        while (stepsLeft > 0) {
+            if (i == nums.length - 1) {
                 return true;
             }
-        }
 
-        cache[index] = false;
+            // we try to reach the last position in the array by getting max left steps as many as possible when increment by 1
+            stepsLeft = Math.max(stepsLeft - 1, nums[i]);
+            i++;
+        }
         return false;
     }
+
+    // round 4
+    // d.p. bottom-up with memorization
+//    public boolean canJump(int[] nums) {
+//        if (nums.length == 0) {
+//            return false;
+//        }
+//
+//        boolean[] reachable = new boolean[nums.length];
+//        reachable[nums.length - 1] = true;
+//        for (int i = nums.length - 2; i >= 0; i--) {
+//            int maxSteps = nums[i];
+//            if (maxSteps == 0) {
+//                continue;
+//            }
+//
+//            for (int j = 1; i+j < nums.length && j <= maxSteps; j++) {
+//                if (reachable[i+j] == true) {
+//                    reachable[i] = true;
+//                    break;
+//                }
+//            }
+//        }
+//        return reachable[0];
+//    }
+
+    // round 3 top-down with memorization 1000ms, 43.7mb
+//    public boolean canJump(int[] nums) {
+//        Boolean[] cache = new Boolean[nums.length];
+//        cache[nums.length - 1] = true;
+//        return reachable(nums, cache, 0);
+//    }
+//
+//    private boolean reachable(int[] nums, Boolean[] cache, int index) {
+//        if (cache[index] != null) {
+//            return cache[index];
+//        }
+//
+//        for (int i = 1; i <= nums[index] && index + i < nums.length; i++) {
+//            if (reachable(nums, cache, nums[index + i])) {
+//                cache[index + i] = true;
+//                return true;
+//            }
+//        }
+//
+//        cache[index] = false;
+//        return false;
+//    }
 
 // !!!! Greedy solution
 // round 2

@@ -12,26 +12,54 @@ package com.leetcode.sort_colors;
  * https://leetcode.com/problems/sort-colors/discuss/26549/Java-solution-both-2-pass-and-1-pass
  */
 public class Solution {
-    // round 3
-    // better understanding than round 2
+    // round 4
     public void sortColors(int[] nums) {
-        // 1-pass
-        int p1 = 0, p2 = nums.length - 1, index = 0;
-        while (index <= p2) {
-            if (nums[index] == 0) {
-                nums[index] = nums[p1];
-                nums[p1] = 0;
-                p1++;
+        int start = 0;
+        int end = nums.length - 1;
+        int i = 0;
+        while (i <= end) {
+            if (nums[i] == 0) {
+                // swap item i and start
+                int tmp = nums[start];
+                nums[start] = nums[i];
+                nums[i] = tmp;
+                start++;
+                i++;
+                continue;
+            } else if (nums[i] == 2) {
+                int tmp = nums[end];
+                nums[end] = nums[i];
+                nums[i] = tmp;
+                end--;
+                continue;
+            } else {
+                i++;
+                continue;
             }
-            if (nums[index] == 2) {
-                nums[index] = nums[p2];
-                nums[p2] = 2;
-                p2--;
-                index--;
-            }
-            index++;
         }
     }
+
+
+    // round 3
+    // better understanding than round 2
+    // public void sortColors(int[] nums) {
+    //     // 1-pass
+    //     int p1 = 0, p2 = nums.length - 1, index = 0;
+    //     while (index <= p2) {
+    //         if (nums[index] == 0) {
+    //             nums[index] = nums[p1];
+    //             nums[p1] = 0;
+    //             p1++;
+    //         }
+    //         if (nums[index] == 2) {
+    //             nums[index] = nums[p2];
+    //             nums[p2] = 2;
+    //             p2--;
+    //             index--;
+    //         }
+    //         index++;
+    //     }
+    // }
 
 
     // round 2

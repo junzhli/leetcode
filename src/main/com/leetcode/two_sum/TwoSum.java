@@ -34,7 +34,7 @@ class Solution {
         // get each pair's complement to check whether if it gets a match in hashmap which indicates the answer we expected
         for (int j = 0; j < nums.length; j++) {
             int complement = target - nums[j];
-            if (hashmap.containsKey(complement)) {
+            if (hashmap.containsKey(complement) && !hashmap.get(complement).equals(j)) {
                 return new int[] {j, hashmap.get(complement)};
             }
         }

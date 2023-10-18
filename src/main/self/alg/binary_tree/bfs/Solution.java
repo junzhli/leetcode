@@ -18,6 +18,8 @@ public class Solution {
     /**
      * Binary tree traversal through BFS using iteration with the help of queue
      *
+     * t.c. o(n)
+     *
      */
     public void binaryTreeBFS(Node n) {
         Queue<Node> queue = new LinkedList<>();

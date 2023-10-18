@@ -74,19 +74,19 @@ public class Prim {
                     if (settledNodes.contains(adjEdge.dst)) {
                         continue;
                     }
-                    if (unsettledNodes.contains(adjEdge.dst)) {
+                    if (unsettledNodes.contains(adjEdge.dst)) { // resort
                         unsettledNodes.remove(adjEdge.dst);
                     }
-                    adjEdge.dst.minEdge = adjEdge;
+                    adjEdge.dst.minEdge = adjEdge; // set itself minEdge to this adjEdge
                     unsettledNodes.offer(adjEdge.dst);
                 } else {
                     if (settledNodes.contains(adjEdge.src)) {
                         continue;
                     }
-                    if (unsettledNodes.contains(adjEdge.src)) {
+                    if (unsettledNodes.contains(adjEdge.src)) { // resort
                         unsettledNodes.remove(adjEdge.src);
                     }
-                    adjEdge.src.minEdge = adjEdge;
+                    adjEdge.src.minEdge = adjEdge; // set itself minEdge to this adjEdge
                     unsettledNodes.offer(adjEdge.src);
                 }
             }

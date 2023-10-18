@@ -32,7 +32,7 @@ class Solution {
             return s.length();
         }
 
-        HashMap<Character, Integer> hashMap = new HashMap<>();
+        HashMap<Character, Integer> hashMap = new HashMap<>(); // char --> last position of itself
         int maxLength = 0;
 
         for (int j = 0, i = 0; j < s.length(); j++) {

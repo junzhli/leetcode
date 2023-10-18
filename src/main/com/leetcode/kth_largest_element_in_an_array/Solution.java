@@ -1,40 +1,43 @@
 package com.leetcode.kth_largest_element_in_an_array;
 
 import java.util.Arrays;
+import java.util.HashSet;
 
 // https://leetcode.com/problems/kth-largest-element-in-an-array/discuss/60294/Solution-explained
 public class Solution {
-    // round 2
-    // t.c. avg o(n), worst o(n^2), ... n + n/2 + n/4 .... < 2n
-    // s.c. o(1)
+    // round 4
+    // same as round 2, beautifier
     public int findKthLargest(int[] nums, int k) {
+        // use quick select algorithm, which it originates from quick select's subprocedure 'partition'
+        int res = -1;
         int start = 0;
         int end = nums.length - 1;
-        k = (nums.length - k);
-        while (start <= end) { // why <=, rather than <: for case of array with length 1. e.g. [1]
-            int pivot = partition(nums, start, end);
-            if (pivot < k) {
-                start = pivot + 1;
-            } else if (pivot > k) {
-                end = pivot - 1;
-            } else {
-                return nums[pivot];
+        k = nums.length - k; // nth largest -- indicates --> index (length - n) e.g. 1th --> len = 3 --> 3 - 1 = 2 index
+        while (start <= end) {
+            res = partition(nums, start, end);
+            if (res == k) {
+                return nums[k];
+            } else if (res < k) {
+                start = res + 1;
+            } else { // res > k
+                end = res - 1;
             }
         }
         return -1;
     }
 
     private int partition(int[] nums, int start, int end) {
-        int pivot = nums[end];
-
-        int i = start; // denotes lower bound
-        int j = start; // denotes current index of looping array
-        for (; j < end; j++) {
+        if (start == end) {
+            return start;
+        }
+        int pivot = nums[end]; // always choose end index
+        int i = start;
+        for (int j = start; j <= end - 1; j++) {
             if (nums[j] <= pivot) {
-                swap(i++, j, nums);
+                swap(i, j, nums);
+                i++;
             }
         }
-
         swap(i, end, nums);
         return i;
     }
@@ -44,6 +47,72 @@ public class Solution {
         nums[x] = nums[y];
         nums[y] = tmp;
     }
+
+    // not working, leads to tle
+//    public int findKthLargest(int[] nums, int k) {
+//        HashSet<Integer> set = new HashSet<>();
+//        int gMax = Integer.MAX_VALUE;
+//        int pos = -1;
+//        int max = Integer.MIN_VALUE;
+//        for (int i = 0; i < k; i++) {
+//            max = Integer.MIN_VALUE;
+//            pos = -1;
+//
+//            for (int j = 0; j < nums.length; j++) {
+//                if (nums[j] <= gMax && !set.contains(j)) {
+//                    if (nums[j] >= max) {
+//                        max = nums[j];
+//                        pos = j;
+//                    }
+//                }
+//            }
+//            gMax = max;
+//            set.add(pos);
+//        }
+//        return gMax;
+//    }
+
+    // round 2
+    // quick select algorithm
+    // t.c. avg o(n), worst o(n^2), ... n + n/2 + n/4 .... < 2n
+    // s.c. o(1)
+//    public int findKthLargest(int[] nums, int k) {
+//        int start = 0;
+//        int end = nums.length - 1;
+//        k = (nums.length - k);
+//        while (start <= end) { // why <=, rather than <: for case of array with length 1. e.g. [1]
+//            int pivot = partition(nums, start, end);
+//            if (pivot < k) {
+//                start = pivot + 1;
+//            } else if (pivot > k) {
+//                end = pivot - 1;
+//            } else {
+//                return nums[pivot];
+//            }
+//        }
+//        return -1;
+//    }
+//
+//    private int partition(int[] nums, int start, int end) {
+//        int pivot = nums[end];
+//
+//        int i = start; // denotes lower bound
+//        int j = start; // denotes current index of looping array
+//        for (; j < end; j++) {
+//            if (nums[j] <= pivot) {
+//                swap(i++, j, nums);
+//            }
+//        }
+//
+//        swap(i, end, nums);
+//        return i;
+//    }
+//
+//    private void swap(int x, int y, int[] nums) {
+//        int tmp = nums[x];
+//        nums[x] = nums[y];
+//        nums[y] = tmp;
+//    }
 
     // round 1
 //    public int findKthLargest(int[] nums, int k) {

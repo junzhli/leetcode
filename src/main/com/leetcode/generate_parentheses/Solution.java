@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Solution {
-    private int _n;
     private List<String> result = new ArrayList<>();
 
     public List<String> generateParenthesis(int n) {
-        _n = n;
-        _generateParenthesis("", 0, 0);
+        _generateParenthesis("", 0, 0, n);
 
 //        for (int x = 0; x < result.size(); x++) {
 //            System.out.println(result.get(x));
@@ -17,18 +15,19 @@ public class Solution {
         return result;
     }
 
-    private void _generateParenthesis(String str, int start, int end) {
-        if (str.length() == _n * 2 && start == _n && end == _n) {
+    private void _generateParenthesis(String str, int open, int close, int n) {
+        if (str.length() == n * 2) {
             result.add(str);
+            StringBuilder a = new StringBuilder();
             return;
         }
 
-        if (start > end) {
-            _generateParenthesis(str + ")", start, end + 1);
+        if (open > close) {
+            _generateParenthesis(str + ")", open, close + 1, n);
         }
 
-        if (start < _n) {
-            _generateParenthesis(str + "(", start + 1, end);
+        if (open < n) {
+            _generateParenthesis(str + "(", open + 1, close, n);
         }
     }
 }

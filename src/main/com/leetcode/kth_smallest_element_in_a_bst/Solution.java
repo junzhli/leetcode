@@ -24,37 +24,80 @@ public class Solution {
       TreeNode(int x) { val = x; }
     }
 
-    // round 2
-    // use dfs traversal - inorder (left, visit root, right)
-    private int k;
-    private int res;
-
+    // round 3
+    private int count = -1;
+    private int k = -1;
+    private int result = - 1;
     public int kthSmallest(TreeNode root, int k) {
+        this.count = 0;
         this.k = k;
-        kthSmallest(root);
-        return res;
+        this.result = -1;
+        traverse(root);
+        return result;
+
     }
 
-    private void kthSmallest(TreeNode root) {
+    private void traverse(TreeNode root) {
         if (root == null) {
             return;
         }
 
-        if (this.k <= 0) {
+        if (root != null && root.left == null && root.right == null) {
+            count++;
+            if (count == k) {
+                result = root.val;
+                return;
+            }
             return;
         }
 
-        kthSmallest(root.left);
-        if (this.k <= 0) {
+        if (root.left != null) {
+            traverse(root.left);
+        }
+
+        count++;
+        if (count == k) {
+            result = root.val;
             return;
         }
-        res = root.val;
-        this.k -= 1;
-        if (this.k <= 0) {
-            return;
+
+
+        if (root.right != null) {
+            traverse(root.right);
         }
-        kthSmallest(root.right);
     }
+
+    // round 2
+    // use dfs traversal - inorder (left, visit root, right)
+//    private int k;
+//    private int res;
+//
+//    public int kthSmallest(TreeNode root, int k) {
+//        this.k = k;
+//        kthSmallest(root);
+//        return res;
+//    }
+//
+//    private void kthSmallest(TreeNode root) {
+//        if (root == null) {
+//            return;
+//        }
+//
+//        if (this.k <= 0) {
+//            return;
+//        }
+//
+//        kthSmallest(root.left);
+//        if (this.k <= 0) {
+//            return;
+//        }
+//        res = root.val;
+//        this.k -= 1;
+//        if (this.k <= 0) {
+//            return;
+//        }
+//        kthSmallest(root.right);
+//    }
 
 
     // round 1

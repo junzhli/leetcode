@@ -67,6 +67,7 @@ public class Solution {
             return 0;
         }
 
+        // optional!!, this logic is implicitly implemented in main logic
         // find the highest of left and right edges which can hold water
         // -->[hold water]<--, (as left/right side of edges can't hold water as mentioned in question)
         int i = 0, j = A.length - 1;
@@ -77,6 +78,7 @@ public class Solution {
             j--;
         }
 
+        // [main logic]
         int res = 0;
         // start fill water as follow:
         while (i < j) {

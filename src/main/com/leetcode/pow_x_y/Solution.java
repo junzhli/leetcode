@@ -7,6 +7,33 @@ package com.leetcode.pow_x_y;
  *
  */
 public class Solution {
+    public double myPow(double x, int n) {
+        if (x == (double) 1) {
+            return x;
+        }
+
+        double result = 1;
+        long nn = Math.abs(n);
+        while (nn != 0) {
+            if (nn % 2 == 0) { // is even
+                x = x * x;
+                nn = nn / 2;
+            } else {
+                result = result * x;
+                nn = nn - 1;
+            }
+        }
+
+        if (n < 0) {
+            return 1/result;
+        }
+        return result;
+    }
+
+
+}
+    /**
+
     double nD;
     double tmp;
     boolean minus;
@@ -69,3 +96,5 @@ public class Solution {
         }
     }
 }
+
+     **/

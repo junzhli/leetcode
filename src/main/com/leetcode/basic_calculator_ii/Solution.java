@@ -15,7 +15,7 @@ public class Solution {
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
             if (Character.isDigit(c)) {
-                subTotal = subTotal * 10 + (c - '0');
+                subTotal = subTotal * 10 + (c - '0'); // !!! Integer.valueOf(char) will return ascii value of char, not itself, needs String.valueOf
             }
 
             if (!Character.isDigit(c) && c != ' ' || i == s.length() - 1) {

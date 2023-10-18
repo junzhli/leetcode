@@ -1,7 +1,11 @@
 package com.leetcode.contains_duplicate;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class Solution {
     // use hashset by well known data structure: 6ms
@@ -27,4 +31,12 @@ public class Solution {
         }
         return false;
     }
+
+//    private static volatile boolean initialized = false;
+//    public static void main(String[] args) {
+//        var rwLock = new ReentrantReadWriteLock();
+//        System.out.println(rwLock);
+//        rwLock.writeLock().lock();
+//        rwLock.readLock().lock();
+//    }
 }

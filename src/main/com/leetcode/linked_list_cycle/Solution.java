@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
+//https://www.geeksforgeeks.org/floyds-cycle-finding-algorithm/
+// https://leetcode.com/problems/linked-list-cycle/solutions/1829489/c-easy-to-understand-2-pointer-fast-slow/?envType=featured-list&envId=top-interview-questions
 public class Solution {
     class ListNode {
       int val;

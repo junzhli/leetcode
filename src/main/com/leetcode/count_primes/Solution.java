@@ -12,7 +12,7 @@ public class Solution {
             // i * i: as a refinement, it's sufficient to terminate if i^2 > n
             // i * i < prime.length: i < square of prime n
             for (int j = i; j * i < prime.length; j++) {
-                prime[j * i] = false; // prime: j (starting from 2), times: i (starting from 2)
+                prime[i * j] = false; // prime: j (starting from 2), times: i (starting from 2)
             }
         }
 

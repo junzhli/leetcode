@@ -5,43 +5,83 @@ import java.util.Collections;
 
 /**
  * https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/
+ * t.c. o(n)
+ * s.c. o(1)
  */
 public class Solution {
-    // round 2
-    // time complexity: o(log n)
-    // space complexity: o(1)
+    // round 3 (beautifier than round 2)
     public int[] searchRange(int[] nums, int target) {
-        int left = 0;
-        int right = nums.length - 1;
-        int mid = (left + right) / 2;
-        boolean found = false;
-        while (left <= right) {
-            mid = (left + right) / 2;
-            if (target > nums[mid]) {
-                left = mid + 1;
-            } else if (target < nums[mid]) {
-                right = mid - 1;
-            } else {
-                found = true;
+        if (nums.length == 0) {
+            return new int[]{-1,-1};
+        }
+
+        int start = 0;
+        int end = nums.length -1;
+        int mid = start + (end - start)/2;
+        while (start <= end) {
+            mid = start + (end - start)/2;
+            if (nums[mid] == target) {
                 break;
+            }
+
+            if (nums[mid] < target) {
+                start = mid + 1;
+            } else {
+                end = mid - 1;
             }
         }
 
-        if (!found) {
-            return new int[]{-1, -1};
+        if (nums[mid] != target) {
+            return new int[]{-1,-1};
         }
 
-        int first = mid;
-        int second = mid;
-        while (first > 0 && nums[first] == nums[first - 1]) {
-            first--;
+        int leftP = mid;
+        int rightP = mid;
+        while (leftP - 1 >= 0 && nums[leftP - 1] == target) {
+            leftP--;
         }
-        while (second < nums.length - 1 && nums[second] == nums[second + 1]) {
-            second++;
+        while (rightP + 1 < nums.length && nums[rightP + 1] == target) {
+            rightP++;
         }
 
-        return new int[]{first, second};
+        return new int[]{leftP, rightP};
     }
+
+    // round 2
+    // time complexity: o(log n)
+    // space complexity: o(1)
+//    public int[] searchRange(int[] nums, int target) {
+//        int left = 0;
+//        int right = nums.length - 1;
+//        int mid = (left + right) / 2;
+//        boolean found = false;
+//        while (left <= right) {
+//            mid = (left + right) / 2;
+//            if (target > nums[mid]) {
+//                left = mid + 1;
+//            } else if (target < nums[mid]) {
+//                right = mid - 1;
+//            } else {
+//                found = true;
+//                break;
+//            }
+//        }
+//
+//        if (!found) {
+//            return new int[]{-1, -1};
+//        }
+//
+//        int first = mid;
+//        int second = mid;
+//        while (first > 0 && nums[first] == nums[first - 1]) {
+//            first--;
+//        }
+//        while (second < nums.length - 1 && nums[second] == nums[second + 1]) {
+//            second++;
+//        }
+//
+//        return new int[]{first, second};
+//    }
 
 
     // round 1

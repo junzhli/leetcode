@@ -5,43 +5,91 @@ import java.util.ArrayList;
 import java.util.List;
 
 class MinStack {
+    // round 3
+    // same as round 2, beautifier
+    private ArrayList<Integer> array;
+    private ArrayList<Integer> min;
+    
 
-    // round 2
-    // use arraylist
-    private List<Integer> min;
-    private List<Integer> stack;
-    /** initialize your data structure here. */
     public MinStack() {
-        min = new ArrayList<>();
-        stack = new ArrayList<>();
+        this.array = new ArrayList<>();
+        this.min = new ArrayList<>();
     }
-
-    public void push(int x) {
-        stack.add(x);
+    
+    public void push(int val) {
+        array.add(val);
         if (min.size() == 0) {
-            min.add(x);
+            min.add(val);
+        } else {
+            if (min.get(min.size() - 1) >= val) {
+                min.add(val);
+            }
+        }
+    }
+    
+    public void pop() {
+        if (array.size() == 0) {
             return;
         }
 
-        if (x <= min.get(min.size() - 1)) {
-            min.add(x);
-        }
-    }
-
-    public void pop() {
-        if (stack.get(stack.size() - 1).equals(min.get(min.size() - 1))) {
+        if (!(min.size() == 0) && (array.get(array.size() - 1).equals(min.get(min.size() - 1)))) {
             min.remove(min.size() - 1);
         }
-        stack.remove(stack.size() - 1);
+        array.remove(array.size() - 1);
     }
-
+    
     public int top() {
-        return stack.get(stack.size() - 1);
+        if (array.size() == 0) {
+            return -1;
+        }
+        return array.get(array.size() - 1);
     }
-
+    
     public int getMin() {
+        if (min.size() == 0) {
+            return -1;
+        }
+
         return min.get(min.size() - 1);
     }
+
+
+    // round 2
+    // // use arraylist
+    // private List<Integer> min;
+    // private List<Integer> stack;
+    // /** initialize your data structure here. */
+    // public MinStack() {
+    //     min = new ArrayList<>();
+    //     stack = new ArrayList<>();
+    // }
+
+    // public void push(int x) {
+    //     stack.add(x);
+    //     if (min.size() == 0) {
+    //         min.add(x);
+    //         return;
+    //     }
+
+    //     if (x <= min.get(min.size() - 1)) {
+    //         min.add(x);
+    //     }
+    // }
+
+    // public void pop() {
+    //     if (stack.get(stack.size() - 1).equals(min.get(min.size() - 1))) {
+    //         min.remove(min.size() - 1);
+    //     }
+    //     stack.remove(stack.size() - 1);
+    // }
+
+    // public int top() {
+    //     return stack.get(stack.size() - 1);
+    // }
+
+    // public int getMin() {
+    //     return min.get(min.size() - 1);
+    // }
 
 
     // round 1

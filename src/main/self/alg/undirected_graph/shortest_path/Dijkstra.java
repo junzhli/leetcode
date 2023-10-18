@@ -32,8 +32,6 @@ public class Dijkstra {
     }
 
     public static void main(String[] args) {
-
-
         // build a graph
         List<Node> nodes = new ArrayList<>();
         Node a = new Node('a');

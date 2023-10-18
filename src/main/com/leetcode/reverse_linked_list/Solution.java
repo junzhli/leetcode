@@ -7,30 +7,43 @@ public class Solution {
       ListNode(int x) { val = x; }
     }
 
+    // round 3
+    public ListNode reverseList(ListNode head) {
+        ListNode next = null;
+        while (head != null) {
+            ListNode nextNext = head;
+            ListNode nextHead = head.next;
+            head.next = next;
+            next = nextNext;
+            head = nextHead;
+        }
+        return next;
+    }
+
     /**
      * Use recursion
      */
-    private ListNode ret;
-    public ListNode reverseList(ListNode head) {
-        if (head == null) {
-            return null;
-        }
-
-        helper(null, head);
-        return ret;
-    }
-
-    private ListNode helper(ListNode prev, ListNode curr) {
-        if (curr.next == null) {
-            curr.next = prev;
-            ret = curr;
-            return prev;
-        }
-
-        ListNode r = helper(curr, curr.next);
-        r.next = prev;
-        return prev;
-    }
+//    private ListNode ret;
+//    public ListNode reverseList(ListNode head) {
+//        if (head == null) {
+//            return null;
+//        }
+//
+//        helper(null, head);
+//        return ret;
+//    }
+//
+//    private ListNode helper(ListNode prev, ListNode curr) {
+//        if (curr.next == null) {
+//            curr.next = prev;
+//            ret = curr;
+//            return prev;
+//        }
+//
+//        ListNode r = helper(curr, curr.next);
+//        r.next = prev;
+//        return prev;
+//    }
 
     /**
      * Use iteration

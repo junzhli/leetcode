@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Stack;
 
 /**
- * dfs
+ * dfs: print itself, and then continue to visit its adjacent list <-> compared to topological sorting
  *
  * Depth First Traversals:
  * (a) Inorder (Left, Root, Right) : 4 2 5 1 3

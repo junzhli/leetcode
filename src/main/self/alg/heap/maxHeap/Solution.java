@@ -1,5 +1,8 @@
 package self.alg.heap.maxHeap;
 
+// round 2
+// good read
+// https://medium.com/@ankur.singh4012/implementing-max-heap-in-java-ea368dadd273
 public class Solution {
     static class MaxHeap implements self.alg.heap.maxHeap.MaxHeap {
         private int curSize;
@@ -40,7 +43,7 @@ public class Solution {
 
         @Override
         public void maxHeap() {
-            for (int i = curSize / 2; i >= 1; i--) {
+            for (int i = curSize / 2; i >= 1; i--) { // start from the parent of curSize pos to be more efficient (since no child node under curSize pos)
                 maxHeapify(i);
             }
         }

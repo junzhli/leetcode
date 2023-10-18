@@ -3,6 +3,9 @@ package com.leetcode.lru_cache;
 import com.leetcode.linked_list_cycle.Solution;
 import org.junit.jupiter.api.Test;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class LRUCacheTest {
@@ -63,5 +66,24 @@ class LRUCacheTest {
         assertEquals(3, cache4.get(3));
         assertEquals(-1, cache4.get(4));
         assertEquals(5, cache4.get(5));
+
+        System.out.println("==============");
+        LinkedHashMap<Integer, Integer> map = new LinkedHashMap<>(2) {
+            @Override
+            protected boolean removeEldestEntry(Map.Entry<Integer, Integer> eldest) {
+                return size() > 2;
+            }
+        };
+
+        map.put(2,1);
+        map.put(1,1);
+        map.put(2,3);
+        map.put(4,1);
+//        map.get(1);
+//        map.get(2);
+        for (Integer k: map.keySet()) {
+            System.out.println(k);
+        }
+
     }
 }

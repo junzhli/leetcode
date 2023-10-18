@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
+// see this to differentiate between this question and #105 preorder/postorder + inorder
+// https://leetcode.com/problems/serialize-and-deserialize-binary-tree/solutions/74253/easy-to-understand-java-solution/?envType=featured-list&envId=top-interview-questions
 public class Solution {
     /**
      * Definition for a binary tree node.

@@ -3,70 +3,127 @@ package com.leetcode.course_schedule_ii;
 import java.util.*;
 
 public class Solution {
+    // round 3
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        // boolean[] visited = new boolean[numCourses];
+        int[] ims = new int[numCourses];
+        HashMap<Integer, ArrayList<Integer>> adjs = new HashMap<>();
+        for (int[] p: prerequisites) {
+            int after = p[0];
+            int before = p[1];
+            ims[after]++;
+            ArrayList<Integer> adj = adjs.getOrDefault(before, new ArrayList<>());
+            adj.add(after);
+            adjs.putIfAbsent(before, adj);
+        }
+
+        ArrayDeque<Integer> queue = new ArrayDeque<>();
+        for (int i = 0; i < ims.length; i++) {
+            if (ims[i] != 0) {
+                continue;
+            }
+            queue.offer(i);
+        }
+
+        ArrayList<Integer> result = new ArrayList<>();
+        while (!queue.isEmpty()) {
+            int item = queue.poll();
+            // visited[item] = true;
+            result.add(item);
+
+            if (adjs.containsKey(item)) {
+                for (int a: adjs.get(item)) {
+                    ims[a]--;
+
+                    // if (visited[a]) {
+                    //     continue;
+                    // }
+                    if (ims[a] == 0) {
+                        queue.offer(a);
+                    }
+                    if (result.size() > numCourses) { // cycle detected
+                        return new int[0];
+                    }
+                }
+            }
+
+        }
+
+        if (result.size() < numCourses) {
+            return new int[0];
+        }
+
+        int[] res = new int[result.size()];
+        for (int i =0; i < res.length; i++) {
+            res[i] = result.get(i);
+        }
+        return res;
+    }
+
     // round 2
     // using dfs
     // https://en.wikipedia.org/wiki/Topological_sorting
     // dfs, bfs, topological sorting
     // bfs is better at finding shortest path while dfs is better at finding vertices connectivity
     // https://efficientcodeblog.wordpress.com/2017/11/28/topological-sort-dfs-bfs-and-dag/
-    public int[] findOrder(int numCourses, int[][] prerequisites) {
-        boolean[] visited = new boolean[numCourses];
-        boolean[] beingVisited = new boolean[numCourses];
-        ArrayList<Integer>[] neighbors = new ArrayList[numCourses];
-        for (int i = 0; i < neighbors.length; i++) {
-            neighbors[i] = new ArrayList<>();
-        }
-        buildRelations(prerequisites, neighbors);
-        Stack<Integer> stack = new Stack<>();
-
-        for (int i = 0; i < numCourses; i++) {
-            if (visited[i]) {
-                continue;
-            }
-
-            if (!visited[i] && helper(stack, visited, beingVisited, neighbors, i)) {
-                return new int[0];
-            }
-        }
-
-        // use topological sorting !!! the reason we use stack is that our topological sorting uses dfs which means
-        // the starting point returns in the final run
-        ArrayList<Integer> ret = new ArrayList<>();
-        while (!stack.empty()) {
-            ret.add(stack.pop());
-        }
-        return ret.stream().mapToInt(i -> i).toArray();
-    }
-
-    private boolean helper(Stack<Integer> stack, boolean[] visited, boolean[] beingVisited, ArrayList<Integer>[] neighbors, int i) {
-        if (beingVisited[i]) {
-            return true;
-        }
-
-        beingVisited[i] = true;
-
-        for (int n: neighbors[i]) {
-            if (visited[n]) {
-                continue;
-            }
-
-            if (helper(stack, visited, beingVisited, neighbors, n)) {
-                return true;
-            }
-        }
-
-        beingVisited[i] = false;
-        visited[i] = true;
-
-        stack.push(i);
-        return false;
-    }
-
-    private void buildRelations(int[][] prerequisites, ArrayList<Integer>[] neighbors) {
-        for (int[] p: prerequisites) {
-            neighbors[p[1]].add(p[0]);
-        }
-    }
+//    public int[] findOrder(int numCourses, int[][] prerequisites) {
+//        boolean[] visited = new boolean[numCourses];
+//        boolean[] beingVisited = new boolean[numCourses];
+//        ArrayList<Integer>[] neighbors = new ArrayList[numCourses];
+//        for (int i = 0; i < neighbors.length; i++) {
+//            neighbors[i] = new ArrayList<>();
+//        }
+//        buildRelations(prerequisites, neighbors);
+//        Stack<Integer> stack = new Stack<>();
+//
+//        for (int i = 0; i < numCourses; i++) {
+//            if (visited[i]) {
+//                continue;
+//            }
+//
+//            if (!visited[i] && helper(stack, visited, beingVisited, neighbors, i)) {
+//                return new int[0];
+//            }
+//        }
+//
+//        // use topological sorting !!! the reason we use stack is that our topological sorting uses dfs which means
+//        // the starting point returns in the final run
+//        ArrayList<Integer> ret = new ArrayList<>();
+//        while (!stack.empty()) {
+//            ret.add(stack.pop());
+//        }
+//        return ret.stream().mapToInt(i -> i).toArray();
+//    }
+//
+//    private boolean helper(Stack<Integer> stack, boolean[] visited, boolean[] beingVisited, ArrayList<Integer>[] neighbors, int i) {
+//        if (beingVisited[i]) {
+//            return true;
+//        }
+//
+//        beingVisited[i] = true;
+//
+//        for (int n: neighbors[i]) {
+//            if (visited[n]) {
+//                continue;
+//            }
+//
+//            if (helper(stack, visited, beingVisited, neighbors, n)) {
+//                return true;
+//            }
+//        }
+//
+//        beingVisited[i] = false;
+//        visited[i] = true;
+//
+//        stack.push(i);
+//        return false;
+//    }
+//
+//    private void buildRelations(int[][] prerequisites, ArrayList<Integer>[] neighbors) {
+//        for (int[] p: prerequisites) {
+//            neighbors[p[1]].add(p[0]);
+//        }
+//    }
 
 
     // round 1

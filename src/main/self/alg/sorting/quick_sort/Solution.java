@@ -1,5 +1,8 @@
 package self.alg.sorting.quick_sort;
 
+/**
+ * https://towardsdatascience.com/an-overview-of-quicksort-algorithm-b9144e314a72
+ */
 public class Solution {
     public int[] quickSort(int[] arr) {
         if (arr.length <= 1) {
@@ -11,7 +14,7 @@ public class Solution {
     }
 
     private void _quickSort(int[] arr, int start, int end) {
-        if (start < end) {
+        if (start < end) { // no need to sort array with length 1
             int pivot = partition(arr, start, end);
 
             _quickSort(arr, start, pivot - 1);

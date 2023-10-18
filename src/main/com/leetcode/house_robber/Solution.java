@@ -17,6 +17,24 @@ public class Solution {
      *
      */
 
+    public int rob(int[] nums) {
+        if (nums.length == 1) {
+            return nums[0];
+        }
+
+        if (nums.length == 2) {
+            return Math.max(nums[0], nums[1]);
+        }
+
+        int[] dp = new int[nums.length + 1];
+        dp[0] = nums[0];
+        dp[1] = Math.max(dp[0], nums[1]);
+        for (int i = 2; i < nums.length; i++) {
+            dp[i] = Math.max(dp[i-2] + nums[i], dp[i-1]);
+        }
+        return dp[nums.length - 1];
+    }
+
 //    public int rob(int[] nums) {
 //        /**
 //         * Recursive (top-down)
@@ -47,36 +65,37 @@ public class Solution {
 //        return Math.max(rob(aArr) + nums[nums.length - 1], rob(bArr));
 //    }
 
-    int[] result;
-    public int rob(int[] nums) {
-        /**
-         * Recursive + memo (top-down)
-         *
-         * there are two options: a. rob at index i and sum up with the one before rob i - 2 b. not to rob at index i and sum up with the one before rob i - 1
-         * (find the recursive relation)
-         *
-         * except for those cases where nums.length is less than 3: 0, 1, 2
-         * otherwise, return Math.max(rob[selected elements of array from 0 to i - 2] + current value in house i, rob[selected elements of array from 0 to i -1])
-         *
-         * big o: n^2
-         */
-
-        if (nums.length == 0) {
-            return 0;
-        }
-
-        if (nums.length == 1) {
-            return nums[0];
-        }
-
-        if (nums.length == 2) {
-            return Math.max(nums[0], nums[1]);
-        }
-
-        int[] aArr = Arrays.copyOfRange(nums, 0, nums.length - 2);
-        int[] bArr = Arrays.copyOfRange(nums, 0, nums.length - 1);
-        return Math.max(rob(aArr) + nums[nums.length - 1], rob(bArr));
-    }
+//    int[] result;
+//    public int rob(int[] nums) {
+//        /**
+//         * Recursive + memo (top-down)
+//         *
+//         * there are two options: a. rob at index i and sum up with the one before rob i - 2 b. not to rob at index i and sum up with the one before rob i - 1
+//         * (find the recursive relation)
+//         *
+//         * except for those cases where nums.length is less than 3: 0, 1, 2
+//         * otherwise, return Math.max(rob[selected elements of array from 0 to i - 2] + current value in house i, rob[selected elements of array from 0 to i -1])
+//         *
+//         * big o: n^2
+//         */
+//
+//        if (nums.length == 0) {
+//            return 0;
+//        }
+//
+//        if (nums.length == 1) {
+//            return nums[0];
+//        }
+//
+//        if (nums.length == 2) {
+//            return Math.max(nums[0], nums[1]);
+//            .3
+//        }
+//
+//        int[] aArr = Arrays.copyOfRange(nums, 0, nums.length - 2);
+//        int[] bArr = Arrays.copyOfRange(nums, 0, nums.length - 1);
+//        return Math.max(rob(aArr) + nums[nums.length - 1], rob(bArr));
+//    }
 
 
 //    public int rob(int[] nums) {

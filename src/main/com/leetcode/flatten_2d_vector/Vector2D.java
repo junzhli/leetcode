@@ -6,9 +6,11 @@ import java.util.List;
 
 // premium 251, lintcode: https://www.lintcode.com/problem/flatten-2d-vector/discuss
 public class Vector2D implements Iterator<Integer> {
-    List<List<Integer>> vec2d;
-    int x;
-    int y;
+    private List<List<Integer>> vec2d;
+    private int x;
+    private int y;
+
+
     public Vector2D(List<List<Integer>> vec2d) {
         // Initialize your data structure here
         this.vec2d = vec2d;
@@ -19,7 +21,6 @@ public class Vector2D implements Iterator<Integer> {
     @Override
     public Integer next() {
         // Write your code here
-        Integer ret = null;
         while (true) {
             if (x >= vec2d.size()) {
                 break;
@@ -31,23 +32,21 @@ public class Vector2D implements Iterator<Integer> {
                 continue;
             }
 
-            if (ret != null) {
-                break;
-            }
-            ret = vec2d.get(x).get(y++);
+            return vec2d.get(x).get(y++);
         }
-        return ret;
+
+        return null;
     }
 
     @Override
     public boolean hasNext() {
-        // Write your code here
         while (x < vec2d.size()) {
             if (y >= vec2d.get(x).size()) {
                 x++;
                 y = 0;
                 continue;
             }
+
             return true;
         }
         return false;

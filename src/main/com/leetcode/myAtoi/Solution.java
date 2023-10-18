@@ -6,70 +6,130 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Solution {
-    // round 2
-    //
-    public int myAtoi(String str) {
-        List<Character> allowedChars = Arrays.asList('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-');
+    // round 3
+    public int myAtoi(String s) {
+        boolean isSigned = false;
+        char[] sChars = s.toCharArray();
+        int pointer = 0;
+        while (pointer < sChars.length) {
+            char c = sChars[pointer];
 
-        // length 0, return 0
-        if (str.length() == 0) {
-            return 0;
-        }
-
-        // sequentially check chars whether if it not listed in allowedChars,
-        // returns
-        int index = 0;
-        while (true) {
-            if (index >= str.length()) {
-                return 0;
-            }
-
-            if (allowedChars.contains(str.charAt(index))) {
+            if (c != '-' && c != '+' && !(c >= '0' && c <= '9') && c != ' ') {
                 break;
             }
 
-            if (str.charAt(index) != ' ') {
-                return 0;
+            if (c == '-' || c == '+') {
+                isSigned = (c == '-') ? true : false;
+                pointer++;
+                break;
             }
 
-            index += 1;
+            if (c >= '0' && c <= '9') {
+                break;
+            }
+
+            pointer++;
         }
 
-        boolean signSymbol = (str.charAt(index) == '-' || str.charAt(index) == '+');
-        if (signSymbol) {
-            index += 1;
-        }
+        int value = 0;
+        int prev = value;
+        // scan all numeric value
+        while (pointer < sChars.length) {
+            char c = sChars[pointer];
 
-        boolean isSigned = (signSymbol && str.charAt(index - 1) == '-');
+            if (!(c >= '0' && c <= '9') && c != ' ') {
+                break;
+            }
 
-        ArrayList<Integer> arr = new ArrayList<>();
-        while (index < str.length() && str.charAt(index) >= '0' && str.charAt(index) <= '9') {
-            if (isSigned) {
-                arr.add(-(str.charAt(index) - '0'));
+            if (c >= '0' && c <= '9') {
+                if (isSigned) {
+                    value = value * 10 - (c - '0');
+                } else {
+                    value = value * 10 + (c - '0');
+                }
+
+                if (prev != value / 10) {
+                    if (isSigned) {
+                        return Integer.MIN_VALUE;
+                    } else {
+                        return Integer.MAX_VALUE;
+                    }
+                }
+                prev = value;
             } else {
-                arr.add(str.charAt(index) - '0');
+                break;
             }
 
-            index += 1;
+            pointer++;
         }
 
-        int res = 0;
-        int prevRes = 0;
-        for (int i = 0; i < arr.size(); i++) {
-            res = res * 10 + arr.get(i);
-            if ((res - arr.get(i)) / 10 != prevRes) {
-                return (isSigned) ? Integer.MIN_VALUE : Integer.MAX_VALUE;
-            }
-
-            if (res > 0 && prevRes < 0 || res < 0  && prevRes > 0) {
-                return (isSigned) ? Integer.MIN_VALUE : Integer.MAX_VALUE;
-            }
-
-            prevRes = res;
-        }
-
-        return res;
+        return value;
     }
+
+    // round 2
+    //
+//    public int myAtoi(String str) {
+//        List<Character> allowedChars = Arrays.asList('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-');
+//
+//        // length 0, return 0
+//        if (str.length() == 0) {
+//            return 0;
+//        }
+//
+//        // sequentially check chars whether if it not listed in allowedChars,
+//        // returns
+//        int index = 0;
+//        while (true) {
+//            if (index >= str.length()) {
+//                return 0;
+//            }
+//
+//            if (allowedChars.contains(str.charAt(index))) {
+//                break;
+//            }
+//
+//            if (str.charAt(index) != ' ') {
+//                return 0;
+//            }
+//
+//            index += 1;
+//        }
+//
+//        boolean signSymbol = (str.charAt(index) == '-' || str.charAt(index) == '+');
+//        if (signSymbol) {
+//            index += 1;
+//        }
+//
+//        boolean isSigned = (signSymbol && str.charAt(index - 1) == '-');
+//
+//        ArrayList<Integer> arr = new ArrayList<>();
+//        while (index < str.length() && str.charAt(index) >= '0' && str.charAt(index) <= '9') {
+//            if (isSigned) {
+//                arr.add(-(str.charAt(index) - '0'));
+//            } else {
+//                arr.add(str.charAt(index) - '0');
+//            }
+//
+//            index += 1;
+//        }
+//
+//        int res = 0;
+//        int prevRes = 0;
+//        for (int i = 0; i < arr.size(); i++) {
+//            res = res * 10 + arr.get(i);
+//            if ((res - arr.get(i)) / 10 != prevRes) {
+//                return (isSigned) ? Integer.MIN_VALUE : Integer.MAX_VALUE;
+//            }
+//
+//            if (res > 0 && prevRes < 0 || res < 0  && prevRes > 0) {
+//                return (isSigned) ? Integer.MIN_VALUE : Integer.MAX_VALUE;
+//            }
+//
+//            prevRes = res;
+//        }
+//
+//        return res;
+//    }
 
 
 //    public int myAtoi(String str) {

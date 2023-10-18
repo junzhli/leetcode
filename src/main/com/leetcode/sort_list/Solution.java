@@ -14,42 +14,165 @@ public class Solution {
         }
     }
 
-
-    // TODO use merge sort (divide and conquer), top-down and then follow-up bottom-up
-    // round 2 (25ms)
+    // round 4 (same as round 1, but beautifier)
     public ListNode sortList(ListNode head) {
         if (head == null) {
             return head;
         }
 
-        PriorityQueue<ListNode> queue = new PriorityQueue<>(new Comparator<ListNode>() {
-            @Override
-            public int compare(ListNode l1, ListNode l2) {
-                return l1.val - l2.val;
-            }
-        });
 
-        ListNode curr = head;
-        while (curr != null) {
-            queue.offer(curr);
-            curr = curr.next;
+
+        return helper(head);
+    }
+
+    private ListNode helper(ListNode head) {
+        if (head.next == null) {
+            return head;
         }
 
-        ListNode n = null;
-        while (!queue.isEmpty()) {
-            ListNode tmp = queue.poll();
-            if (n != null) {
-                n.next = tmp;
-                n = n.next;
+        ListNode mid = split(head);
+        return merge(helper(head), helper(mid));
+    }
+
+    private ListNode merge(ListNode l1, ListNode l2) { // iterative version
+        if (l1 == null) {
+            return l2;
+        }
+        if (l2 == null) {
+            return l1;
+        }
+
+        ListNode head = null;
+        ListNode curr = null;
+        if (l1.val < l2.val) {
+            head = l1;
+            l1 = l1.next;
+        } else {
+            head = l2;
+            l2 = l2.next;
+        }
+        curr = head;
+
+        while (l1 != null && l2 != null) {
+            if (l1.val < l2.val) {
+                curr.next = l1;
+                curr = curr.next;
+                l1 = l1.next;
             } else {
-                n = tmp;
-                head = n;
+                curr.next = l2;
+                curr = curr.next;
+                l2 = l2.next;
             }
         }
-        n.next = null;
 
+        if (l1 != null) {
+            curr.next = l1;
+        }
+        if (l2 != null) {
+            curr.next = l2;
+        }
         return head;
     }
+
+    // private ListNode merge (ListNode l1, ListNode l2) { // recursive version
+    //     if (l1 == null) {
+    //         return l2;
+    //     }
+    //     if (l2 == null) {
+    //         return l1;
+    //     }
+
+    //     if (l1.val <= l2.val) {
+    //         l1.next = merge(l1.next, l2);
+    //         return l1;
+    //     } else {
+    //         l2.next = merge(l1, l2.next);
+    //         return l2;
+    //     }
+    // }
+
+
+
+    private ListNode split(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+        while (slow.next != null && fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        ListNode ret = slow.next;
+        slow.next = null;
+
+        return ret;
+    }
+
+    // round 3 (same as round 2, but beautifier)
+//    public ListNode sortList(ListNode head) {
+//        PriorityQueue<ListNode> pq = new PriorityQueue<>(new Comparator<ListNode>() {
+//            @Override
+//            public int compare(ListNode l1, ListNode l2) {
+//                return l2.val - l1.val;
+//            }
+//        });
+//
+//        ListNode curr = head;
+//        while (curr != null) {
+//            pq.offer(curr);
+//            curr = curr.next;
+//        }
+//
+//        ListNode prev = null;
+//        if (pq.isEmpty()) {
+//            return null;
+//        }
+//        curr = pq.poll();
+//        while (curr != null) {
+//            curr.next = prev;
+//            prev = curr;
+//            if (pq.isEmpty()) {
+//                break;
+//            }
+//            curr = pq.poll();
+//        }
+//
+//        return curr;
+//    }
+
+    // TODO use merge sort (divide and conquer), top-down and then follow-up bottom-up
+    // round 2 (25ms)
+//    public ListNode sortList(ListNode head) {
+//        if (head == null) {
+//            return head;
+//        }
+//
+//        PriorityQueue<ListNode> queue = new PriorityQueue<>(new Comparator<ListNode>() {
+//            @Override
+//            public int compare(ListNode l1, ListNode l2) {
+//                return l1.val - l2.val;
+//            }
+//        });
+//
+//        ListNode curr = head;
+//        while (curr != null) {
+//            queue.offer(curr);
+//            curr = curr.next;
+//        }
+//
+//        ListNode n = null;
+//        while (!queue.isEmpty()) {
+//            ListNode tmp = queue.poll();
+//            if (n != null) {
+//                n.next = tmp;
+//                n = n.next;
+//            } else {
+//                n = tmp;
+//                head = n;
+//            }
+//        }
+//        n.next = null;
+//
+//        return head;
+//    }
 
 
     // round 1 (5ms)
@@ -98,7 +221,7 @@ public class Solution {
 //        }
 //
 //        ListNode ret = slow.next;
-//        slow.next = null;
+//        slow.next = null; //!!!!
 //        return ret;
 //    }
 

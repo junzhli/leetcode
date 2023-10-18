@@ -19,7 +19,7 @@ public class Solution {
             public int compare(String s1, String s2) {
                 String ssA = s1 + s2;
                 String ssB = s2 + s1;
-                return ssB.compareTo(ssA);
+                return ssB.compareTo(ssA); // to compare two string based on the unicode value refer to : https://www.w3schools.com/java/ref_string_compareto.asp
             }
         });
 
